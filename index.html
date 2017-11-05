@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="DopplerEffect">
+<head>
+  <meta charset="UTF-8">
+  <title>Doppler Effect</title>
+  <link href="css/animate.css" rel="stylesheet">
+  <!-- Latest compiled and minified Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- AngularJS and Slider -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.4.0/rzslider.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.4.0/rzslider.min.js"></script>
+
+  <script src="js/app.js"></script>
+
+  <link href="css/main.css" rel="stylesheet">
+</head>
+<body ng-controller="DopplerController">
+  <div class="container text-center">
+    <img src="images/star-small.png">
+    <div class="velocity-area text-center">
+      <rzslider id="slider"
+          rz-slider-model="slider.value"
+          rz-slider-options="slider.options"></rzslider>
+      <div class="input-group input-group-lg velocity-input">
+        <span class="input-group-addon" id="basic-addon3">Velocity</span>
+        <input id="velocity"
+            name="velocity"
+            class="form-control"
+            ng-model="slider.value"
+            ng-model-options="{ updateOn: 'blur' }"
+            ng-change="velocityCheck()"
+            type="number"
+            min=-100
+            max=100
+            placeholder="Number"
+            aria-describedby="basic-addon2"
+            value=0.0 />
+        <span class="input-group-addon" id="basic-addon2">km/s</span>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</html>
