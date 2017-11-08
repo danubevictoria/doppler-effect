@@ -5,43 +5,46 @@
   <title>Doppler Effect</title>
   <link href="css/animate.css" rel="stylesheet">
   <!-- Latest compiled and minified Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <!-- AngularJS and Slider -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.4.0/rzslider.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.4.0/rzslider.min.js"></script>
-
-  <script src="js/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.4.0/rzslider.js"></script>
 
   <link href="css/main.css" rel="stylesheet">
 </head>
 <body ng-controller="DopplerController">
   <div class="container text-center">
-    <img src="images/star-small.png">
-    <div class="velocity-area text-center">
-      <rzslider id="slider"
-          rz-slider-model="slider.value"
-          rz-slider-options="slider.options"></rzslider>
-      <div class="input-group input-group-lg velocity-input">
-        <span class="input-group-addon" id="basic-addon3">Velocity</span>
-        <input id="velocity"
-            name="velocity"
+    <img id="star" src="images/star-small.png">
+      <div class="velocity-area container text-center">
+        <rzslider id="slider"
+        rz-slider-on-change="slider.change()"
+        rz-slider-model="slider.value"
+        rz-slider-options="slider.options"
+        rz-slider-ceil="slider.min"
+        rz-slider-floor="slider.max"></rzslider>
+        <form class="velocity-form">
+          <div class="input-group input-group-lg velocity-input">
+            <span class="input-group-addon" id="basic-addon3">Velocity</span>
+            <input id="velocity"
             class="form-control"
             ng-model="slider.value"
             ng-model-options="{ updateOn: 'blur' }"
-            ng-change="velocityCheck()"
+            ng-change="change()"
             type="number"
             min=-100
             max=100
             placeholder="Number"
             aria-describedby="basic-addon2"
-            value=0.0 />
-        <span class="input-group-addon" id="basic-addon2">km/s</span>
+            value=0.0
+            required />
+            <span class="input-group-addon" id="basic-addon2">km/s</span>
+          </div>
+        </form>
       </div>
-    </div>
   </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="js/app.js"></script>
 </html>

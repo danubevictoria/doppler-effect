@@ -1,34 +1,68 @@
-angular.module('DopplerEffect', ['rzModule'])
+var app = angular.module('DopplerEffect', ['rzModule']);
 
-.controller('DopplerController', function($scope) {
+app.controller('DopplerController', function($scope) {
   $scope.velocityCheck = function () {
     var velocity = document.getElementById('velocity');
     var slider = $scope.slider;
-    var ceiling = slider.options.ceil;
-    var floor = slider.options.floor;
-    if (velocity.value > ceiling) {
-      slider.options.ceil = ceiling;
-      velocity.value = ceiling;
-      // $scope.velocity.$setvalidity('velocity', false);
-    } else if (velocity.value < floor) {
-      slider.options.floor = floor;
-      velocity.value = floor;
-      console.log(velocity.value);
+    var min = slider.min;
+    var max = slider.max;
+    if (velocity.value < min) {
+      $scope.slider.min = -100;
+      velocity.value = $scope.slider.min;
+    } else if (velocity.value > max) {
+      $scope.slider.max = 100;
+      velocity.value = $scope.slider.max;
+    } else {
+      $scope.slider.value = velocity.value;
+    }
+  };
+
+  $scope.change = function() {
+    var value = $scope.slider.value;
+    $scope.colorChange(value);
+    $scope.zoom(value);
+  };
+
+  $scope.colorChange = function(value) {
+    if (value < 0) {
+      $('#star').removeClass('red-tint');
+      $('#star').addClass('blue-tint');
+      $('#background').addClass('blue-tint');
+    } else if (value > 0) {
+      $('#star').removeClass('blue-tint');
+      $('#star').addClass('red-tint');
+    } else {
+      $('#star').removeClass('blue-tint');
+      $('#star').removeClass('red-tint');
+      $('#star').addClass('normal');
+    }
+  };
+
+  $scope.zoom = function(value) {
+    var originalWidth = 420;
+    if (value != 0) {
+      $('#star').width(originalWidth + (2 * value));
+    } else {
+      $('#star').width(originalWidth);
     }
   };
 
   $scope.slider = {
     value: 0.0,
+    min: -100,
+    max: 100,
     options: {
       floor: -100.00,
       ceil: 100.00,
       step: 0.1,
-      showTicksValues: false,
-      showTicks: false,
       precision: 1,
+      onChange: $scope.change,
       customValueToPosition: function(val, minVal, maxVal) {
-        console.log(val);
-        if (val > minVal && val < maxVal) {
+        if (isNaN(val)) {
+          val = 0;
+          return (val - minVal) / range;
+        }
+        if (val >= minVal && val <= maxVal) {
           if (val < 0) {
             val = -Math.sqrt(Math.abs(val));
           } else {
@@ -48,11 +82,7 @@ angular.module('DopplerEffect', ['rzModule'])
           }
 
           var range = maxVal - minVal;
-          console.log('range stuff'+val);
           return (val - minVal) / range;
-        } else {
-
-          return 0;
         }
       },
       customPositionToValue: function(percent, minVal, maxVal) {
@@ -79,7 +109,6 @@ angular.module('DopplerEffect', ['rzModule'])
         } else {
           return Math.pow(value, 2);
         }
-
       }
     }
   };

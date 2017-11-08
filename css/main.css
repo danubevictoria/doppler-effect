@@ -7,6 +7,27 @@ body {
   display: block;
 }
 
+/* STAR */
+.normal {
+  transition: 2s ease;
+}
+
+.red-tint {
+  filter:   saturate(8) hue-rotate(330deg) brightness(1);
+  transition: 2s ease;
+}
+
+.blue-tint {
+  filter: saturate(5) hue-rotate(170deg);
+  transition: 2s ease;
+}
+
+/* VELOCITY */
 .velocity-input {
   width: 100%;
+}
+
+.velocity-area {
+  position: fixed;
+  top: 450px;
 }
