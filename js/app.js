@@ -1,6 +1,7 @@
 var app = angular.module('DopplerEffect', ['rzModule']);
 
 app.controller('DopplerController', function($scope) {
+  // To check that the velocity is in range. If out of range, defaults to max or min of range which is -100 or 100.
   $scope.velocityCheck = function () {
     var velocity = document.getElementById('velocity');
     var slider = $scope.slider;
@@ -17,12 +18,14 @@ app.controller('DopplerController', function($scope) {
     }
   };
 
+// To change the star's color and move the star toward or away based on slider's value
   $scope.change = function() {
     var value = $scope.slider.value;
     $scope.colorChange(value);
     $scope.zoom(value);
   };
 
+// The star's color changes to red when velocity is positive, changes to blue when velocity is negative, changes to neutral when velocity is  0
   $scope.colorChange = function(value) {
     if (value < 0) {
       $('#star').removeClass('red-tint');
@@ -38,15 +41,21 @@ app.controller('DopplerController', function($scope) {
     }
   };
 
+// Simulates the star moving toward or away by incorporating the slider's value into the size of the star image
+// If velocity is positive, star's size grows smaller
+// If velocity is negative, star's size grows bigger
   $scope.zoom = function(value) {
     var originalWidth = 420;
     if (value != 0) {
-      $('#star').width(originalWidth + (2 * value));
+      $('#star').width(originalWidth - (3 * value));
     } else {
       $('#star').width(originalWidth);
     }
   };
 
+// To set up the slider using rzslider.
+// customValueToPosition handles negative values when assigning value.
+// customPositionToValue handles negative values when calculating position on the slider
   $scope.slider = {
     value: 0.0,
     min: -100,
